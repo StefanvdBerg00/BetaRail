@@ -5,23 +5,24 @@ class City:
         self.name = name
         self.connections = []
 
-    def add(self, destination, time):
-        self.connections.append({"destination":destination, "time":time, "visited":False})
+    def add(self, connection):
+        self.connections.append(connection)
 
     def __str__(self):
-        return f"{self.name}: {self.connections}"
+        return f"{self.name}"
 
 class Connection:
     def __init__(self, city1, city2, time):
         self.city1 = city1
         self.city2 = city2
         self.time = time
+        self.visited = False
 
     def __str__(self):
-        return f"From {self.city1} to {self.city2} ({self.time} seconds)"        
+        return f"From {self.city1} to {self.city2} ({self.time} min)"
 
 cities = {}
-max_length = 0 
+max_length = 0
 
 with open("data/ConnectiesHolland.csv") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -35,8 +36,9 @@ with open("data/ConnectiesHolland.csv") as csv_file:
         if city2 not in cities:
             cities[city2] = City(city2)
 
-        cities[city1].add(cities[city2], time)
-        cities[city2].add(cities[city1], time)
+        connection = Connection(cities[city1], cities[city2], time)
+        cities[city1].add(connection)
+        cities[city2].add(connection)
 
         if len(cities[city1].connections) > max_length:
             max_length = len(cities[city1].connections)
@@ -48,33 +50,29 @@ with open("data/ConnectiesHolland.csv") as csv_file:
 trajects = []
 
 found = True
-
 while found:
-
+    start_city = current_city
     found = False
-    time = 0 
-    route = [current_city]
+    time = 0
+    route = []
     change = True
+
     while True:
         next = False
         prev_city = current_city
         for connection in current_city.connections:
-            
-            if connection["destination"] not in route and time + connection["time"] < 120 and not connection["visited"]:
-                route.append(connection["destination"])
-                connection["visited"] = True
-                destination = cities[connection["destination"].name]
-                destination.connections["visited"] = True
-                print (destination.name)
-                time += connection["time"]
-                current_city = connection["destination"]
+            if connection not in route and (time + connection.time < 120) and not connection.visited:
+                route.append(connection)
+                connection.visited = True
+                time += connection.time
+                current_city = connection.city2 if connection.city2 != current_city else connection.city1
                 next = True
                 break
-        
+
         if not next:
             if current_city == prev_city:
                 if change:
-                    current_city = route[0]
+                    current_city = start_city
                     route.reverse()
                     change = False
                 else:
@@ -82,25 +80,11 @@ while found:
 
     trajects.append({"route":route, "time": time})
 
-    
     for city in cities.values():
         for connection in city.connections:
-            if not connection["visited"]:
+            if not connection.visited:
                 current_city = city
                 found = True
+                break
 
-
-    print ([city.name for city in route])
-    print (time)
-
-
-        
-
-
-
-
-
-
-            
-            
-        
+    print([f"{connection}" for connection in route])
