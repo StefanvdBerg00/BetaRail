@@ -1,15 +1,17 @@
+import sys
+
 def main_city(cities):
-    max_length = 0
+    min_length = sys.maxsize
 
     for city in cities:
         length = len([connection for connection in cities[city].connections if not connection.visited])
-        if length > max_length:
-            max_length = length
+        if length < min_length and length != 0:
+            min_length = length
             current_city = cities[city]
 
     return current_city
 
-def centeredapproach(cities, MAX_MIN):
+def outerapproach(cities, MAX_MIN):
     trajects = []
 
     found = True
@@ -23,6 +25,7 @@ def centeredapproach(cities, MAX_MIN):
 
         while True:
             next = False
+            # prev_city = current_city
             for connection in current_city.connections:
                 if (time + connection.time < MAX_MIN) and not connection.visited:
                     route.append(connection)
@@ -33,6 +36,7 @@ def centeredapproach(cities, MAX_MIN):
                     break
 
             if not next:
+                # if current_city == prev_city:
                 if not change:
                     break
 
