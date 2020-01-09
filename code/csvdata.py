@@ -1,11 +1,11 @@
 import csv
 from classes import City, Connection
 
-def csvdata():
+def csvdata(connections_file, coordinates_file):
     cities = {}
     all_connections = []
 
-    with open("data/ConnectiesNationaal.csv") as csv_file:
+    with open(connections_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             city1 = row[0]
@@ -22,7 +22,7 @@ def csvdata():
             cities[city1].add(connection)
             cities[city2].add(connection)
 
-    with open("data/StationsNationaal.csv") as csv_file:
+    with open(coordinates_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             city = row[0]

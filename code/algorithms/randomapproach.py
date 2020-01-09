@@ -1,5 +1,6 @@
 import random
 from random import randrange
+from classes import Traject
 
 def random_city(cities):
     while True:
@@ -7,50 +8,26 @@ def random_city(cities):
         if len([connection for connection in city.connections if not connection.visited]) != 0:
             return city
 
-def randomapproach(cities, MAX_MIN):
-    trajects = []
-
-    found = True
-    while found:
-        current_city = random_city(cities)
+def randomapproach(schedule):
+    while sum([len(city.get_available_connections()) for city in schedule.cities.values()]) != 0:
+        current_city = random_city(schedule.cities)
         start_city = current_city
-        found = False
-        time = 0
-        route = []
-        change = True
-        print("-------------------")
-        print(current_city)
-        print("-------------------")
-        while True:
-            next = False
-            prev_city = current_city
-            connections = [connection for connection in current_city.connections if not connection.visited]
+        traject = Traject()
+
+        while traject.next_city or traject.reversible:
+            traject.next_city = False
+            connections = current_city.get_available_connections()
 
             if len(connections) != 0:
-                connection = connections[randrange(len(connections))]
-                if (time + connection.time < MAX_MIN):
-                    route.append(connection)
-                    connection.visited = True
-                    time += connection.time
-                    current_city = connection.city2 if connection.city2 != current_city else connection.city1
-                    next = True
+                connection = random.choice(connections)
+                if (traject.get_time() + connection.time < schedule.max_time):
+                    traject.add(connection)
+                    current_city = current_city.new_current(connection)
+                    traject.next_city = True
 
-            if not next:
-                if current_city == prev_city:
-                    if not change:
-                        break
+            if not traject.next_city:
+                current_city = start_city
+                traject.connections.reverse()
+                traject.reversible = False
 
-                    current_city = start_city
-                    route.reverse()
-                    change = False
-
-
-        trajects.append({"route":route, "time": time})
-
-        for city in cities.values():
-            if len([connection for connection in city.connections if not connection.visited]) != 0:
-                current_city = city
-                found = True
-                break
-
-    return trajects
+        schedule.trajects.append(traject)

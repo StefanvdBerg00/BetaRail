@@ -4,32 +4,27 @@ sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
 
 from visualisation import visualisation
-from classes import City, Connection
+from classes import City, Connection, Schedule, Traject
 from csvdata import csvdata
 from centeredapproach import centeredapproach
 from outerapproach import outerapproach
 from randomapproach import randomapproach
 
-def quality(trajects):
-    T = len(trajects)
-    Min = sum([traject["time"] for traject in trajects])
-    p = len([connection for connection in all_connections if connection.visited]) / len(all_connections)
-    return {"p": p, "T": T, "Min": Min, "K": p*10000 - (T*100 + Min)}
-
 MIN_180 = 180
 MIN_120 = 120
-
-csvdata = csvdata()
-cities = csvdata["cities"]
-all_connections = csvdata["all_connections"]
 
 # trajects = centeredapproach(cities, MIN_180)
 
 # trajects = outerapproach(cities, MIN_180)
 
-trajects = randomapproach(cities, MIN_180)
+best = {"schedule": None, "K": 0}
+for i in range(10000):
+    schedule = Schedule(csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv"), MIN_180)
+    randomapproach(schedule)
+    quality = schedule.quality()
 
-for traject in trajects:
-    print([f"{connection}" for connection in traject["route"]])
+    if quality["K"] > best["K"]:
+        best["schedule"] = schedule
+        best["K"] = quality["K"]
 
-visualisation(trajects, quality(trajects))
+visualisation(best["schedule"].trajects, best["schedule"].quality())

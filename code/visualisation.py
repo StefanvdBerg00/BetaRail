@@ -2,20 +2,19 @@ import matplotlib
 import matplotlib.pyplot as plt
 import mplcursors
 import csv
-from random import randrange
+import random
 
 def visualisation(trajects, quality):
+    color = 0
+    color_step = 1 / len(trajects) if len(trajects) != 0 else 0
 
     plt.imshow(plt.imread("map1.png"), extent=[3.315, 7.222, 50.703, 53.622])
     data = []
 
-    colors = [hex for name, hex in matplotlib.colors.cnames.items()]
-
     for traject in trajects:
-        i = randrange(len(colors))
-        
-        for connection in traject["route"]:
-            plt.plot([connection.city1.y, connection.city2.y], [connection.city1.x, connection.city2.x], color=colors[i], zorder=1)
+        color += color_step
+        for connection in traject.connections:
+            plt.plot([connection.city1.y, connection.city2.y], [connection.city1.x, connection.city2.x], color=matplotlib.colors.hsv_to_rgb([color, 1, 1]), zorder=1)
 
             data.append(plt.scatter(connection.city1.y, connection.city1.x, color="blue", zorder=2, label=connection.city1.name))
             data.append(plt.scatter(connection.city2.y, connection.city2.x, color="blue", zorder=2, label=connection.city2.name))
