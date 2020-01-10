@@ -12,7 +12,7 @@ def outer_city(cities):
     min_length = sys.maxsize
 
     for city in cities:
-        length = len(city.get_connections(False))
+        length = len(cities[city].get_connections(False))
         if length < min_length and length != 0:
             min_length = length
             current_city = cities[city]
@@ -23,7 +23,7 @@ def centered_city(cities):
     max_length = 0
 
     for city in cities:
-        length = len(city.get_connections(False))
+        length = len(cities[city].get_connections(False))
         if length > max_length:
             max_length = length
             current_city = cities[city]
@@ -62,7 +62,7 @@ def approach(schedule, method):
 
             if len(connections) != 0:
                 connection = random.choice(connections)
-                if (traject.get_time() + connection.time < schedule.max_time):
+                if (traject.get_time() + connection.time < schedule.max_time) and connection not in traject.connections:
                     traject.add(connection)
                     current_city = current_city.new_current(connection)
                     traject.route.append(current_city)
