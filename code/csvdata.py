@@ -6,8 +6,7 @@ def csvdata(connections_file, coordinates_file):
     all_connections = []
 
     with open(connections_file) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
+        for row in csv.reader(csv_file, delimiter=','):
             city1 = row[0]
             city2 = row[1]
             time = int(row[2])
@@ -23,13 +22,13 @@ def csvdata(connections_file, coordinates_file):
             cities[city2].add(connection)
 
     with open(coordinates_file) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        for row in csv_reader:
+        for row in csv.reader(csv_file, delimiter=','):
             city = row[0]
             x = float(row[1])
             y = float(row[2])
 
-            cities[city].x = x
-            cities[city].y = y
+            if city in cities:
+                cities[city].x = x
+                cities[city].y = y
 
     return {"cities": cities, "all_connections": all_connections}

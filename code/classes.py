@@ -1,3 +1,6 @@
+import csv
+
+
 class City:
     def __init__(self, name):
         self.name = name
@@ -13,12 +16,11 @@ class City:
             return connection.city2
         return connection.city1
 
-    def get_available_connections(self):
-        return [connection for connection in self.connections if not connection.visited]
+    def get_connections(self, visited):
+        return [connection for connection in self.connections if connection.visited == visited]
 
     def __repr__(self):
         return f"{self.name}"
-
 
 class Connection:
     def __init__(self, city1, city2, time):
@@ -34,6 +36,7 @@ class Connection:
 class Traject:
     def __init__(self):
         self.connections = []
+        self.route = []
         self.time = 0
         self.reversible = True
         self.next_city = True
@@ -62,6 +65,14 @@ class Schedule:
         Min = sum([traject.get_time() for traject in self.trajects])
         p = len([connection for connection in self.all_connections if connection.visited]) / len(self.all_connections)
         return {"p": p, "T": T, "Min": Min, "K": p*10000 - (T*100 + Min)}
+
+    def create_csv(self):
+        with open('results/solution.csv', mode="w", newline="") as solution_file:
+            solution_writer = csv.writer(solution_file, delimiter=",")
+            solution_writer.writerow(["trein", "lijnvoering"])
+
+            for i, traject in enumerate(self.trajects):
+                solution_writer.writerow([f"trein_{i + 1}", traject.route])
 
     def __repr__(self):
         return f"{self.trajects}"

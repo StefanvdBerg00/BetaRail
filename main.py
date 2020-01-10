@@ -6,25 +6,39 @@ sys.path.append(os.path.join(directory, "code", "algorithms"))
 from visualisation import visualisation
 from classes import City, Connection, Schedule, Traject
 from csvdata import csvdata
-from centeredapproach import centeredapproach
-from outerapproach import outerapproach
-from randomapproach import randomapproach
+from approach import approach
+
+def run(connections_file, coordinates_file, N, max_time, method):
+    best = {"schedule": None, "K": 0}
+
+    print("-" * 99)
+    for i in range(N):
+        if i % (N // 100) == 0:
+            print("◘" * (i // (N // 100)), end="\r")
+
+        schedule = Schedule(csvdata(connections_file, coordinates_file), max_time)
+        approach(schedule, method)
+        quality = schedule.quality()
+
+        if quality["K"] > best["K"]:
+            best["schedule"] = schedule
+            best["K"] = quality["K"]
+
+    return best
+
 
 MIN_180 = 180
 MIN_120 = 120
 
-# trajects = centeredapproach(cities, MIN_180)
+N = 10000
 
-# trajects = outerapproach(cities, MIN_180)
+A = "random"
+B = "centered"
+C = "outer"
+D = "overlay"
 
-best = {"schedule": None, "K": 0}
-for i in range(10000):
-    schedule = Schedule(csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv"), MIN_180)
-    randomapproach(schedule)
-    quality = schedule.quality()
+solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, D)
 
-    if quality["K"] > best["K"]:
-        best["schedule"] = schedule
-        best["K"] = quality["K"]
+solution["schedule"].create_csv()
 
-visualisation(best["schedule"].trajects, best["schedule"].quality())
+visualisation(solution["schedule"].trajects, solution["schedule"].quality())
