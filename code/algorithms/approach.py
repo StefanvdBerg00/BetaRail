@@ -33,7 +33,7 @@ def centered_city(cities):
 
 def approach(schedule, method):
     while sum([len(city.get_connections(False)) for city in schedule.cities.values()]) != 0:
-        if method == "random" or method == "overlay":
+        if method == "random" or method == "overlay" or method == "new":
             current_city = random_city(schedule.cities)
         elif method == "centered":
             current_city = centered_city(schedule.cities)
@@ -57,6 +57,21 @@ def approach(schedule, method):
                     connections = unavailable_connections
                 else:
                     connections = available_connections
+
+            elif method == "new":
+                connections = {}
+
+                for connection in current_city.get_connections(False):
+                    next_city = current_city.new_current(connection)
+                    value = len(next_city.get_connections(False)) - 1
+
+                    if value in connections.keys():
+                        connections[value].append(connection)
+                    else:
+                        connections[value] = [connection]
+
+                connections = connections[min(connections.keys())] if len(connections) != 0 else []
+
             else:
                 connections = current_city.get_connections(False)
 

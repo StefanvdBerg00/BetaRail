@@ -1,3 +1,4 @@
+Week 1
 1. Algemene uitleg
 -Rails
 
@@ -16,3 +17,14 @@
 -Meerdere sporen tegelijk beginnen in alle uithoeken om vervolgens sporen bij elkaar te voegen.
 -Maximaal aantal minuten variëren.
 -Gaan we overlappen?!
+
+
+
+1. Algemene uitleg
+
+2. Tot nu toe
+-Random / meeste / minste / overlappen
+
+3. Toekomst
+-Meerdere sporen tegelijk beginnen in alle uithoeken om vervolgens sporen bij elkaar te voegen.
+-Maximaal aantal minuten variëren.

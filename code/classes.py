@@ -22,6 +22,7 @@ class City:
     def __repr__(self):
         return f"{self.name}"
 
+
 class Connection:
     def __init__(self, city1, city2, time):
         self.city1 = city1
@@ -48,6 +49,11 @@ class Traject:
 
     def get_time(self):
         return self.time
+
+    def can_connect(self, city, connections):
+        if (city == self.route[0] or city == self.route[-1]) and not any(connection in connections for connection in self.connections):
+            return True
+        return False
 
     def __repr__(self):
         return f"{self.connections}\n"
