@@ -19,7 +19,7 @@ Week 1
 -Gaan we overlappen?!
 
 
-
+Week 2
 1. Algemene uitleg
 
 2. Tot nu toe

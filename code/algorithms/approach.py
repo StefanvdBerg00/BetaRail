@@ -86,6 +86,7 @@ def approach(schedule, method):
             if not traject.next_city:
                 current_city = start_city
                 traject.connections.reverse()
+                traject.route.reverse()
                 traject.reversible = False
 
         schedule.trajects.append(traject)

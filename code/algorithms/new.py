@@ -36,7 +36,7 @@ class Tree:
         self.schedule = schedule
 
     def create_tree(self, node, n, illegal_connections):
-        if n < 6:
+        if n < 3:
             n += 1
 
             finished = True
@@ -86,8 +86,8 @@ def optimize(schedule):
                     time = sum([connection.time for connection in connections])
                     total_time = traject.time + traject2.time + time
 
-                    if traject2 != traject and traject.can_connect(node.start_node().city, connections) and traject2.can_connect(node.city, connections) and total_time < schedule.max_time and time < best["time"]:
-                        best = {"traject_1": traject, "traject_2": traject2, "added": node, "time": time, "total_time": total_time, "info": [connections, traject2 != traject, traject.can_connect(node.city, connections), traject2.can_connect(node.city, connections)]}
+                    if traject2 != traject and traject.can_connect2(node.start_node().city, connections) and traject2.can_connect2(node.city, connections) and total_time < schedule.max_time and time < best["time"]:
+                        best = {"traject_1": traject, "traject_2": traject2, "added": node, "time": time, "total_time": total_time, "info": [connections, traject2 != traject, traject.can_connect2(node.city, connections), traject2.can_connect2(node.city, connections)]}
 
         if "traject_1" in best.keys():
             # print("----------------OPTIMIZING-----------------")

@@ -41,6 +41,7 @@ class Traject:
         self.time = 0
         self.reversible = True
         self.next_city = True
+        self.current_city = None
 
     def add(self, connection):
         self.connections.append(connection)
@@ -50,7 +51,12 @@ class Traject:
     def get_time(self):
         return self.time
 
-    def can_connect(self, city, connections):
+    def can_connect(self, traject):
+        if (traject.current_city == self.route[0] or traject.current_city == self.route[-1]) and not any(connection in traject.connections for connection in self.connections):
+            return True
+        return False
+
+    def can_connect2(self, city, connections):
         if (city == self.route[0] or city == self.route[-1]) and not any(connection in connections for connection in self.connections):
             return True
         return False

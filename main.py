@@ -7,27 +7,38 @@ from visualisation import visualisation
 from classes import City, Connection, Schedule, Traject
 from csvdata import csvdata
 from approach import approach
-from new import optimize
+from newnewnew import Optimize
+from datetime import datetime
+import time
 
 def run(connections_file, coordinates_file, N, max_time, method, improve):
     best = {"schedule": None, "K": 0}
+    timings = []
 
     print(f"{N}x {method}")
     for i in range(N):
-        if N >= 100 and i % (N // 100) == 0:
-            print(f"{(i // (N // 100))}%", end="\r")
+        # if N >= 100 and i % (N // 100) == 0:
+        #     print(f"{(i // (N // 100))}%", end="\r")
+
+        start = time.time()
 
         schedule = Schedule(csvdata(connections_file, coordinates_file), max_time)
         approach(schedule, method)
 
         if improve:
-            optimize(schedule)
+            optimize = Optimize(schedule, 3)
+            optimize.run()
 
         quality = schedule.quality()
 
         if quality["K"] > best["K"]:
             best["schedule"] = schedule
             best["K"] = quality["K"]
+
+        timings.append(int(round((time.time() - start) * 1000)))
+        print(f"estimated time: {round(((sum(timings)/len(timings)) * (N - i)) / 1000, 1)}", end="\r")
+
+    print(f"\nAVERAGE TIME: {sum(timings)/len(timings)} ms")
 
     return best
 
@@ -44,6 +55,16 @@ D = "overlay"
 E = "new"
 
 IMPROVE = True
+
+solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE)
+
+solution["schedule"].create_csv()
+
+visualisation(solution["schedule"].trajects, solution["schedule"].quality())
+
+
+
+
 
 # schedule = Schedule(csvdata("data/ConnectiesHolland.csv", "data/StationsNationaal.csv"), MIN_120)
 # traject = Traject()
@@ -99,22 +120,11 @@ IMPROVE = True
 # traject.route = [schedule.cities["Beverwijk"], schedule.cities["Castricum"]]
 # schedule.trajects.append(traject)
 #
-# optimize(schedule)
+# from newnew import Optimize
 #
+# optimize = Optimize(schedule, 4)
+# optimize.run()
+#
+# # optimize(schedule)
+# #
 # visualisation(schedule.trajects, schedule.quality())
-
-
-# for connection in schedule.all_connections:
-#     traject = Traject()
-#     traject.add(connection)
-#     traject.route = [connection.city1, connection.city1.new_current(connection)]
-#     schedule.trajects.append(traject)
-# optimize(schedule)
-# visualisation(schedule.trajects, schedule.quality())
-
-
-solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE)
-
-solution["schedule"].create_csv()
-
-visualisation(solution["schedule"].trajects, solution["schedule"].quality())
