@@ -2,9 +2,13 @@ import sys
 import random
 from classes import Traject
 
-class Iets:
-    def __init__(self, schedule):
-        self.schedule = schedule
+
+class Heuristic:
+    def __init__(self, name, city_function, connections_function):
+        self.name = name
+        self.city_function = city_function
+        self.connections_function = connections_function
+        self.schedule = None
         self.current_city = None
         self.connections = None
 
@@ -57,16 +61,16 @@ class Iets:
     def general_connections(self):
         self.connections = self.current_city.get_connections(False)
 
-    def run(self, city_function, connections_function):
+    def run(self):
         while sum([len(city.get_connections(False)) for city in self.schedule.cities.values()]) != 0:
-            city_function()
+            self.city_function(self)
             start_city = self.current_city
             traject = Traject()
             traject.route.append(self.current_city)
 
             while traject.next_city or traject.reversible:
-                traject.next_city = False
-                connections_function()
+                traject.set_next_city(False)
+                self.connections_function(self)
 
                 if len(self.connections) != 0:
                     connection = random.choice(self.connections)
@@ -74,12 +78,10 @@ class Iets:
                         traject.add(connection)
                         self.current_city = self.current_city.new_current(connection)
                         traject.route.append(self.current_city)
-                        traject.next_city = True
+                        traject.set_next_city(True)
 
                 if not traject.next_city:
                     self.current_city = start_city
-                    traject.connections.reverse()
-                    traject.route.reverse()
-                    traject.reversible = False
+                    traject.reverse()
 
             self.schedule.trajects.append(traject)

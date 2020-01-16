@@ -41,15 +41,22 @@ class Traject:
         self.time = 0
         self.reversible = True
         self.next_city = True
-        self.current_city = None
 
     def add(self, connection):
         self.connections.append(connection)
         connection.visited = True
         self.time += connection.time
 
+    def reverse(self):
+        self.connections.reverse()
+        self.route.reverse()
+        self.reversible = False
+
     def get_time(self):
         return self.time
+
+    def set_next_city(self, value):
+        self.next_city = value
 
     def can_connect(self, traject):
         if (traject.current_city == self.route[0] or traject.current_city == self.route[-1]) and not any(connection in traject.connections for connection in self.connections):
