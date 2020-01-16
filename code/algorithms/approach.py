@@ -42,6 +42,7 @@ def approach(schedule, method):
         else:
             return
 
+
         start_city = current_city
         traject = Traject()
         traject.route.append(current_city)

@@ -57,7 +57,7 @@ class Traject:
         return False
 
     def can_connect2(self, city, connections):
-        if (city == self.route[0] or city == self.route[-1]) and not any(connection in connections for connection in self.connections):
+        if (city == self.route[0] or city == self.route[-1]): # and not any(connection in connections for connection in self.connections):
             return True
         return False
 

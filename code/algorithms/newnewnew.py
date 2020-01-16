@@ -49,14 +49,6 @@ class Optimize:
                 self.DepthFirst(traject.route[-1])
 
             if self.shortest["state"]:
-                # print(f"SCHEDULE BEFORE:\n {self.schedule}\n")
-                # print("Trying to connect:")
-                # print(f"STATE: {self.shortest['state'].connections()}")
-                # print(f"TRAJECT1: {self.shortest['old_trajects'][0]}")
-                # print(f"TRAJECT2: {self.shortest['old_trajects'][1]}")
-                #
-                # print(f"TIMES: {self.shortest['state'].length()} + {self.shortest['old_trajects'][0].time} + {self.shortest['old_trajects'][1].time}")
-
                 traject = Traject()
                 traject.time = self.shortest["state"].length() + self.shortest["old_trajects"][0].time + self.shortest["old_trajects"][1].time
 
@@ -76,15 +68,9 @@ class Optimize:
 
                 traject.route = new_route
 
-                # print(f"NEW TRAJECT: {traject}")
-                # print(f"NEW ROUTE: {traject.route}")
-                # print(f"NEW TIME: {traject.time}")
-
                 self.schedule.trajects.remove(self.shortest["old_trajects"][0])
                 self.schedule.trajects.remove(self.shortest["old_trajects"][1])
                 self.schedule.trajects.append(traject)
-
-                # print(f"SCHEDULE AFTER:\n {self.schedule}\n")
 
     def DepthFirst(self, city):
         self.stack.append(Node(city, None, None))
@@ -97,6 +83,6 @@ class Optimize:
                     self.shortest = {"time": state.length(), "state": state, "old_trajects": [self.traject, traject]}
 
             if len(state.connections()) < self.depth and state.length() < self.shortest["time"]:
-                for connection in [connection for connection in state.city.connections if connection not in state.connections() and connection not in self.traject.connections]:
+                for connection in [connection for connection in state.city.connections]: #if connection not in state.connections() and connection not in self.traject.connections]:
                     node = Node(state.city.new_current(connection), connection, state)
                     self.stack.append(node)

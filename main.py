@@ -6,10 +6,11 @@ sys.path.append(os.path.join(directory, "code", "algorithms"))
 from visualisation import visualisation
 from classes import City, Connection, Schedule, Traject
 from csvdata import csvdata
-from approach import approach
+# from approach import approach
 from newnewnew import Optimize
 from datetime import datetime
 import time
+from Iets import Iets
 
 def run(connections_file, coordinates_file, N, max_time, method, improve):
     best = {"schedule": None, "K": 0}
@@ -17,16 +18,17 @@ def run(connections_file, coordinates_file, N, max_time, method, improve):
 
     print(f"{N}x {method}")
     for i in range(N):
-        # if N >= 100 and i % (N // 100) == 0:
-        #     print(f"{(i // (N // 100))}%", end="\r")
+        if N >= 100 and i % (N // 100) == 0:
+            print(f"{(i // (N // 100))}%", end="\r")
 
         start = time.time()
 
         schedule = Schedule(csvdata(connections_file, coordinates_file), max_time)
-        approach(schedule, method)
+        iets = Iets(schedule)
+        iets.run(iets.random_city, iets.general_connections)
 
         if improve:
-            optimize = Optimize(schedule, 3)
+            optimize = Optimize(schedule, 4)
             optimize.run()
 
         quality = schedule.quality()
@@ -36,7 +38,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve):
             best["K"] = quality["K"]
 
         timings.append(int(round((time.time() - start) * 1000)))
-        print(f"estimated time: {round(((sum(timings)/len(timings)) * (N - i)) / 1000, 1)}", end="\r")
+        # print(f"estimated time: {round(((sum(timings)/len(timings)) * (N - i)) / 1000, 1)}", end="\r")
 
     print(f"\nAVERAGE TIME: {sum(timings)/len(timings)} ms")
 
@@ -56,7 +58,12 @@ E = "new"
 
 IMPROVE = True
 
-solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE)
+# schedule = Schedule(csvdata("data/ConnectiesHolland.csv", "data/StationsNationaal.csv"), MIN_120)
+# iets = Iets(schedule)
+# troep = iets.run(iets.random_city, iets.general_connections)
+# visualisation(troep.trajects, troep.quality())
+
+solution = run("data/ConnectiesHolland.csv", "data/StationsNationaal.csv", N, MIN_120, A, IMPROVE)
 
 solution["schedule"].create_csv()
 
