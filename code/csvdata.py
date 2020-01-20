@@ -31,4 +31,12 @@ def csvdata(connections_file, coordinates_file):
                 cities[city].x = x
                 cities[city].y = y
 
+    filter = "Utrecht Centraal"
+    if filter in cities.keys():
+        del cities[filter]
+
+    for connection in reversed(all_connections):
+        if connection.city1.name == filter or connection.city2.name == filter:
+            all_connections.remove(connection)
+
     return {"cities": cities, "all_connections": all_connections}

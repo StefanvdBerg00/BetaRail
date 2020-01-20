@@ -5,7 +5,8 @@ import mplcursors
 import csv
 import random
 
-def visualisation(trajects, quality):
+def visualisation(schedule):
+    trajects = schedule.get_trajects()
     color = 0
     color_step = 1 / len(trajects) if len(trajects) != 0 else 0
 
@@ -15,7 +16,8 @@ def visualisation(trajects, quality):
     lines = {}
 
     for i, traject in enumerate(trajects):
-        label = f"{traject.route[0]} -> {traject.route[-1]}"
+        route = traject.get_route()
+        label = f"{route[0]} -- {traject.get_time()} -> {route[-1]}"
         lines[label] = []
         color += color_step
 
@@ -26,6 +28,7 @@ def visualisation(trajects, quality):
             points.append(ax.scatter(connection.city1.y, connection.city1.x, color="blue", zorder=3, label=connection.city1.name))
             points.append(ax.scatter(connection.city2.y, connection.city2.x, color="blue", zorder=3, label=connection.city2.name))
 
+    quality = schedule.quality()
     text = "K:     " + str(quality["K"]) + "\np:     " + str(quality["p"]) + "\nT:     " + str(quality["T"]) + "\nMin: " + str(quality["Min"])
 
     plt.subplots_adjust(left=0.4)

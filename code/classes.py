@@ -8,6 +8,9 @@ class City:
         self.x = None
         self.y = None
 
+    def get_connections(self, visited):
+        return [connection for connection in self.connections if connection.visited == visited]
+
     def add(self, connection):
         self.connections.append(connection)
 
@@ -15,9 +18,6 @@ class City:
         if connection.city1 == self:
             return connection.city2
         return connection.city1
-
-    def get_connections(self, visited):
-        return [connection for connection in self.connections if connection.visited == visited]
 
     def __repr__(self):
         return f"{self.name}"
@@ -30,6 +30,9 @@ class Connection:
         self.time = time
         self.visited = False
 
+    def get_time(self):
+        return self.time
+
     def __repr__(self):
         return f"From {self.city1} to {self.city2} ({self.time} min)"
 
@@ -37,10 +40,24 @@ class Connection:
 class Traject:
     def __init__(self):
         self.connections = []
-        self.route = []
         self.time = 0
         self.reversible = True
         self.next_city = True
+
+    def get_connections(self):
+        return self.connections
+
+    def get_time(self):
+        return self.time
+
+    def get_reversible(self):
+        return self.reversible
+
+    def get_next_city(self):
+        return self.next_city
+
+    def set_next_city(self, value):
+        self.next_city = value
 
     def add(self, connection):
         self.connections.append(connection)
@@ -49,24 +66,24 @@ class Traject:
 
     def reverse(self):
         self.connections.reverse()
-        self.route.reverse()
         self.reversible = False
 
-    def get_time(self):
-        return self.time
-
-    def set_next_city(self, value):
-        self.next_city = value
-
-    def can_connect(self, traject):
-        if (traject.current_city == self.route[0] or traject.current_city == self.route[-1]) and not any(connection in traject.connections for connection in self.connections):
+    def can_connect(self, city, connections):
+        route = self.get_route()                 
+        if (city == route[0] or city == route[-1]): #and not any(connection in connections for connection in self.connections):
             return True
         return False
 
-    def can_connect2(self, city, connections):
-        if (city == self.route[0] or city == self.route[-1]): # and not any(connection in connections for connection in self.connections):
-            return True
-        return False
+    def get_route(self):
+        if len(self.connections) == 1:
+            return [self.connections[0].city1, self.connections[0].city2]
+
+        city = self.connections[0].city1 if self.connections[0].city1 != self.connections[1].city1 and self.connections[0].city1 != self.connections[1].city2 else self.connections[0].city2
+        route = [city]
+        for connection in self.connections:
+            city = city.new_current(connection)
+            route.append(city)
+        return route
 
     def __repr__(self):
         return f"{self.connections}\n"
@@ -78,6 +95,18 @@ class Schedule:
         self.all_connections = data["all_connections"]
         self.cities = data["cities"]
         self.max_time = max_time
+
+    def get_trajects(self):
+        return self.trajects
+
+    def get_cities(self):
+        return self.cities
+
+    def get_max_time(self):
+        return self.max_time
+
+    def add_traject(self, traject):
+        self.trajects.append(traject)
 
     def quality(self):
         T = len(self.trajects)
@@ -91,7 +120,7 @@ class Schedule:
             solution_writer.writerow(["trein", "lijnvoering"])
 
             for i, traject in enumerate(self.trajects):
-                solution_writer.writerow([f"trein_{i + 1}", traject.route])
+                solution_writer.writerow([f"trein_{i + 1}", traject.get_route()])
 
     def __repr__(self):
         return f"{self.trajects}"

@@ -7,11 +7,11 @@ from visualisation import visualisation
 from classes import City, Connection, Schedule, Traject
 from csvdata import csvdata
 from optimize import Optimize
+from heuristic import Heuristic
 from datetime import datetime
 import time
-from heuristic import Heuristic
 
-def run(connections_file, coordinates_file, N, max_time, method, improve):
+def run(connections_file, coordinates_file, N, max_time, method, improve, depth):
     best = {"schedule": None, "K": 0}
     timings = []
 
@@ -26,7 +26,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve):
         method.run()
 
         if improve:
-            optimize = Optimize(method.schedule, 4)
+            optimize = Optimize(method.schedule, depth)
             optimize.run()
 
         quality = method.schedule.quality()
@@ -38,7 +38,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve):
         timings.append(int(round((time.time() - start) * 1000)))
         # print(f"estimated time: {round(((sum(timings)/len(timings)) * (N - i)) / 1000, 1)}", end="\r")
 
-    print(f"\nAVERAGE TIME: {sum(timings)/len(timings)} ms")
+    # print(f"\nAVERAGE TIME: {sum(timings)/len(timings)} ms")
 
     return best
 
@@ -46,7 +46,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve):
 MIN_180 = 180
 MIN_120 = 120
 
-N = 1000
+N = 100
 
 A = Heuristic("random", Heuristic.random_city, Heuristic.general_connections)
 B = Heuristic("centered", Heuristic.centered_city, Heuristic.general_connections)
@@ -55,13 +55,13 @@ D = Heuristic("overlay", Heuristic.random_city, Heuristic.overlay_connections)
 E = Heuristic("new", Heuristic.random_city, Heuristic.new_connections)
 
 IMPROVE = True
+DEPTH = 4
 
-solution = run("data/ConnectiesHolland.csv", "data/StationsNationaal.csv", N, MIN_120, A, IMPROVE)
+solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_120, E, IMPROVE, DEPTH)
 
 solution["schedule"].create_csv()
 
-visualisation(solution["schedule"].trajects, solution["schedule"].quality())
-
+visualisation(solution["schedule"])
 
 
 
@@ -75,7 +75,6 @@ visualisation(solution["schedule"].trajects, solution["schedule"].quality())
 # traject.add(schedule.all_connections[4])
 # traject.add(schedule.all_connections[3])
 # traject.add(schedule.all_connections[2])
-# traject.route = [schedule.cities["Den Helder"], schedule.cities["Alkmaar"], schedule.cities["Hoorn"], schedule.cities["Zaandam"], schedule.cities["Amsterdam Sloterdijk"], schedule.cities["Amsterdam Centraal"], schedule.cities["Amsterdam Amstel"], schedule.cities["Amsterdam Zuid"]]
 # schedule.trajects.append(traject)
 #
 # traject = Traject()
@@ -88,7 +87,6 @@ visualisation(solution["schedule"].trajects, solution["schedule"].quality())
 # traject.add(schedule.all_connections[15])
 # traject.add(schedule.all_connections[21])
 # traject.add(schedule.all_connections[23])
-# traject.route = [schedule.cities["Dordrecht"], schedule.cities["Rotterdam Centraal"], schedule.cities["Schiedam Centrum"], schedule.cities["Delft"], schedule.cities["Den Haag Centraal"], schedule.cities["Leiden Centraal"], schedule.cities["Alphen a/d Rijn"], schedule.cities["Gouda"], schedule.cities["Rotterdam Alexander"], schedule.cities["Rotterdam Centraal"]]
 # schedule.trajects.append(traject)
 #
 # traject = Traject()
@@ -100,24 +98,20 @@ visualisation(solution["schedule"].trajects, solution["schedule"].quality())
 # traject.add(schedule.all_connections[26])
 # traject.add(schedule.all_connections[25])
 # traject.add(schedule.all_connections[10])
-# traject.route = [schedule.cities["Leiden Centraal"], schedule.cities["Schiphol Airport"], schedule.cities["Amsterdam Zuid"], schedule.cities["Amsterdam Sloterdijk"], schedule.cities["Haarlem"], schedule.cities["Beverwijk"], schedule.cities["Zaandam"], schedule.cities["Castricum"], schedule.cities["Alkmaar"]]
 # schedule.trajects.append(traject)
 #
 # traject = Traject()
 # traject.add(schedule.all_connections[12])
-# traject.route = [schedule.cities["Gouda"], schedule.cities["Den Haag Centraal"]]
 # schedule.trajects.append(traject)
 #
 #
 # traject = Traject()
 # traject.add(schedule.all_connections[18])
 # traject.add(schedule.all_connections[17])
-# traject.route = [schedule.cities["Leiden Centraal"], schedule.cities["Heemstede-Aerdenhout"], schedule.cities["Haarlem"]]
 # schedule.trajects.append(traject)
 #
 # traject = Traject()
 # traject.add(schedule.all_connections[9])
-# traject.route = [schedule.cities["Beverwijk"], schedule.cities["Castricum"]]
 # schedule.trajects.append(traject)
 #
 # from newnew import Optimize
