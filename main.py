@@ -46,7 +46,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve, depth,
 MIN_180 = 180
 MIN_120 = 120
 
-N = 1
+N = 10
 
 A = Heuristic("random", Heuristic.random_city, Heuristic.general_connections)
 B = Heuristic("centered", Heuristic.centered_city, Heuristic.general_connections)
@@ -54,22 +54,48 @@ C = Heuristic("outer", Heuristic.outer_city, Heuristic.general_connections)
 D = Heuristic("overlay", Heuristic.random_city, Heuristic.overlay_connections)
 E = Heuristic("new", Heuristic.random_city, Heuristic.new_connections)
 
-IMPROVE = True
+IMPROVE = False
 DEPTH = 4
 
 FILTER = ""
 
-# solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH, FILTER)
+solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, C, IMPROVE, DEPTH, FILTER)
+
+solution["schedule"].create_csv()
+
+visualisation(solution["schedule"])
+
+# # verwijderen van een stad
+# import csv
+# with open('results/test.csv', mode="w", newline="") as solution_file:
+#     solution_writer = csv.writer(solution_file, delimiter=",")
+#     solution_writer.writerow(["city", "result"])
 #
-# solution["schedule"].create_csv()
-#
-# visualisation(solution["schedule"])
-
-csv = csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "")
-iets = [{"city": city, "solution": run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH, city)} for city in csv["cities"].keys()]
-print(iets)
+#     results = [{"city": city, "solution": run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH, city)} for city in csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "")["cities"].keys()]
+#     for result in results:
+#         solution_writer.writerow([f"{result['city']}", result['solution']['K']])
 
 
+# data
+# import csv
+# for n in range(0, 6):
+#     print(n)
+#     solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", 1*10**n, MIN_180, C, IMPROVE, DEPTH, FILTER)
+#     with open('results/data.csv', mode="a", newline="") as file:
+#         writer = csv.writer(file, delimiter=",")
+#         writer.writerow(["A", solution["schedule"].quality()])
+
+
+
+
+# results = [len(city.connections) for city in csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "")["cities"].values()]
+# iets = 0
+# for result in results:
+#     if iets == 0:
+#         iets = result
+#     else:
+#         iets *= result
+# print(iets)
 
 
 # schedule = Schedule(csvdata("data/ConnectiesHolland.csv", "data/StationsNationaal.csv"), MIN_120)

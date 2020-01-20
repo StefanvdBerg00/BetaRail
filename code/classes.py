@@ -69,7 +69,7 @@ class Traject:
         self.reversible = False
 
     def can_connect(self, city, connections):
-        route = self.get_route()                 
+        route = self.get_route()
         if (city == route[0] or city == route[-1]): #and not any(connection in connections for connection in self.connections):
             return True
         return False
@@ -123,4 +123,4 @@ class Schedule:
                 solution_writer.writerow([f"trein_{i + 1}", traject.get_route()])
 
     def __repr__(self):
-        return f"{self.trajects}"
+        return f"{self.quality()}"
