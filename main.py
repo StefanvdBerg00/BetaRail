@@ -11,7 +11,7 @@ from heuristic import Heuristic
 from datetime import datetime
 import time
 
-def run(connections_file, coordinates_file, N, max_time, method, improve, depth):
+def run(connections_file, coordinates_file, N, max_time, method, improve, depth, filter):
     best = {"schedule": None, "K": 0}
     timings = []
 
@@ -22,7 +22,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve, depth)
 
         start = time.time()
 
-        method.schedule = Schedule(csvdata(connections_file, coordinates_file), max_time)
+        method.schedule = Schedule(csvdata(connections_file, coordinates_file, filter), max_time)
         method.run()
 
         if improve:
@@ -57,11 +57,17 @@ E = Heuristic("new", Heuristic.random_city, Heuristic.new_connections)
 IMPROVE = True
 DEPTH = 4
 
-solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH)
+FILTER = ""
 
-solution["schedule"].create_csv()
+# solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH, FILTER)
+#
+# solution["schedule"].create_csv()
+#
+# visualisation(solution["schedule"])
 
-visualisation(solution["schedule"])
+csv = csvdata("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "")
+iets = [{"city": city, "solution": run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH, city)} for city in csv["cities"].keys()]
+print(iets)
 
 
 

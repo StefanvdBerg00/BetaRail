@@ -1,7 +1,7 @@
 import csv
 from classes import City, Connection
 
-def csvdata(connections_file, coordinates_file):
+def csvdata(connections_file, coordinates_file, filter):
     cities = {}
     all_connections = []
 
@@ -11,15 +11,16 @@ def csvdata(connections_file, coordinates_file):
             city2 = row[1]
             time = int(row[2])
 
-            if city1 not in cities:
-                cities[city1] = City(city1)
-            if city2 not in cities:
-                cities[city2] = City(city2)
+            if filter != city1 and filter != city2:
+                if city1 not in cities:
+                    cities[city1] = City(city1)
+                if city2 not in cities:
+                    cities[city2] = City(city2)
 
-            connection = Connection(cities[city1], cities[city2], time)
-            all_connections.append(connection)
-            cities[city1].add(connection)
-            cities[city2].add(connection)
+                connection = Connection(cities[city1], cities[city2], time)
+                all_connections.append(connection)
+                cities[city1].add(connection)
+                cities[city2].add(connection)
 
     with open(coordinates_file) as csv_file:
         for row in csv.reader(csv_file, delimiter=','):
@@ -30,13 +31,5 @@ def csvdata(connections_file, coordinates_file):
             if city in cities:
                 cities[city].x = x
                 cities[city].y = y
-
-    filter = "Utrecht Centraal"
-    if filter in cities.keys():
-        del cities[filter]
-
-    for connection in all_connections[::-1]:
-        if connection.city1.name == filter or connection.city2.name == filter:
-            all_connections.remove(connection)
 
     return {"cities": cities, "all_connections": all_connections}
