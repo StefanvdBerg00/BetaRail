@@ -35,7 +35,7 @@ def csvdata(connections_file, coordinates_file):
     if filter in cities.keys():
         del cities[filter]
 
-    for connection in reversed(all_connections):
+    for connection in all_connections[::-1]:
         if connection.city1.name == filter or connection.city2.name == filter:
             all_connections.remove(connection)
 

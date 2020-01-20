@@ -7,6 +7,8 @@ import random
 
 def visualisation(schedule):
     trajects = schedule.get_trajects()
+    for traject in schedule.get_trajects():
+        print(traject.get_route())
     color = 0
     color_step = 1 / len(trajects) if len(trajects) != 0 else 0
 

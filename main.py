@@ -46,7 +46,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve, depth)
 MIN_180 = 180
 MIN_120 = 120
 
-N = 100
+N = 1
 
 A = Heuristic("random", Heuristic.random_city, Heuristic.general_connections)
 B = Heuristic("centered", Heuristic.centered_city, Heuristic.general_connections)
@@ -57,7 +57,7 @@ E = Heuristic("new", Heuristic.random_city, Heuristic.new_connections)
 IMPROVE = True
 DEPTH = 4
 
-solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_120, E, IMPROVE, DEPTH)
+solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, E, IMPROVE, DEPTH)
 
 solution["schedule"].create_csv()
 
