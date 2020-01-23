@@ -10,7 +10,8 @@ functies, die bepalen in welke stad het algoritme begint met trajecten
 aanleggen. Een connection_function is een van de volgende drie functies,
 die specificeren op welke manier connecties worden aangelegd. In run worden,
 afhankelijk van de gekozen city_function en connection_function, trajecten 
-gemaakt en toegevoegd aan de lijnvoering. 
+gemaakt en toegevoegd aan de lijnvoering. In main.py kunnen vijf van deze
+verschillende heuristieken worden aangeroepen. 
 
 ## Optimize
 In optimize wordt een Depth First algoritme uitgevoerd op een gegeven
