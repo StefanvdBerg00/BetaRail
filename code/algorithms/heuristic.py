@@ -1,3 +1,12 @@
+# ****************************************************************************
+# heuristic.py
+#
+# RailNL - Team BetaRail
+# Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
+#
+# Programmeertheorie
+# ***************************************************************************/
+
 import sys, random
 from classes import Traject
 
@@ -61,7 +70,7 @@ class Heuristic:
 
         return connections
 
-    def new_connections(self):
+    def least_connections(self):
         """ Returns connections of the next current city with the least connections. """
 
         connections = {}

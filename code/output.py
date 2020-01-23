@@ -1,9 +1,19 @@
+# ****************************************************************************
+# output.py
+#
+# RailNL - Team BetaRail
+# Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
+#
+# Programmeertheorie
+# ***************************************************************************/
+
 import pickle
 from classes import Schedule
 from csvdata import csvdata
 from optimize import Optimize
+from visualisation import visualisation
 
-def run(connections_file, coordinates_file, N, max_time, method, improve, depth, filter):
+def run(connections_file, coordinates_file, file_name, N, max_time, method, improve, depth, exclusion):
     """ Runs algorithm with specified heuristic and returns best schedule. """
 
     best = {"schedule": None, "K": 0, "All": []}
@@ -16,7 +26,7 @@ def run(connections_file, coordinates_file, N, max_time, method, improve, depth,
         if N >= 100 and i % (N // 100) == 0:
             print(f"{(i // (N // 100))}%", end="\r")
 
-        method.schedule = Schedule(csvdata(connections_file, coordinates_file, filter), max_time)
+        method.schedule = Schedule(csvdata(connections_file, coordinates_file, exclusion), max_time)
         method.run()
 
         if improve:
@@ -31,23 +41,26 @@ def run(connections_file, coordinates_file, N, max_time, method, improve, depth,
             best["schedule"] = method.schedule
             best["K"] = quality["K"]
 
-    return best
+    dump(best["schedule"], file_name)
+    best["schedule"].create_csv()
+    print(best["K"])
+    # visualisation(best["schedule"])
 
-def dump(schedule):
+def dump(schedule, file_name):
     """ Checks if given schedule is better than best schedule. """
 
     try:
-        best = load()
+        best = load(file_name)
 
         if schedule.quality()["K"] > best.quality()["K"]:
-            with open("results/Nederland", "wb") as file:
+            with open(f"results/{file_name}", "wb") as file:
                 pickle.dump(schedule, file)
     except:
-        with open("results/Nederland", "wb") as file:
+        with open(f"results/{file_name}", "wb") as file:
             pickle.dump(schedule, file)
 
-def load():
+def load(file_name):
     """ Loads best schedule so far. """
 
-    with open("results/Nederland", "rb") as file:
+    with open(f"results/{file_name}", "rb") as file:
         return pickle.load(file)

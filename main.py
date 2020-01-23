@@ -12,7 +12,7 @@ directory = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(directory, "code"))
 sys.path.append(os.path.join(directory, "code", "algorithms"))
 
-from output import run, dump, load
+from output import run, load
 from visualisation import visualisation
 from heuristic import Heuristic
 
@@ -21,12 +21,15 @@ MIN_180 = 180
 MIN_120 = 120
 
 # Amount of iterations
-N = 100
+N = 1000
 
-# Algorithm specifications
+# Improve algorithm on/off
 IMPROVE = True
 DEPTH = 4
-FILTER = ""
+
+# Name of city to exclude from schedule
+EXCLUSION = ""
+
 
 # Starting in random city, choosing random connections
 A = Heuristic("random", Heuristic.random_city, Heuristic.general_connections)
@@ -41,22 +44,17 @@ C = Heuristic("outer", Heuristic.outer_city, Heuristic.general_connections)
 D = Heuristic("overlay", Heuristic.random_city, Heuristic.overlay_connections)
 
 # Starting in random city, continuing to city with least connections
-E = Heuristic("new", Heuristic.random_city, Heuristic.new_connections)
+E = Heuristic("lookahead", Heuristic.random_city, Heuristic.least_connections)
 
-solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", N, MIN_180, A, IMPROVE, DEPTH, FILTER)
-
-# Save best solution
-dump(solution["schedule"])
-
-# Save solution in solution.csv
-solution["schedule"].create_csv()
-
-visualisation(solution["schedule"])
-
-# visualisation(load())
+run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "Nederland", N, MIN_180, A, IMPROVE, DEPTH, EXCLUSION)
 
 
+# visualisation(load("Nederland"))
 
+# schedule = load("Nederland")
+# print(schedule.quality())
+# for traject in schedule.trajects:
+#     print(f"{traject.get_route()}, {traject.get_time()}, {sum([connection.time for connection in traject.connections])}")
 
 
 # # data

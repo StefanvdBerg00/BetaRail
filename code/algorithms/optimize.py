@@ -1,3 +1,12 @@
+# ****************************************************************************
+# optimize.py
+#
+# RailNL - Team BetaRail
+# Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
+#
+# Programmeertheorie
+# ***************************************************************************/
+
 import copy
 from classes import Traject
 
@@ -8,16 +17,18 @@ class Node:
         self.connection = connection
         self.prev_node = prev_node
 
+    def get_city(self):
+        """ Returns city of node. """
+        return self.city
+
     def length(self):
         """ Returns length of connected nodes. """
-
         if self.prev_node:
             return self.connection.get_time() + self.prev_node.length()
         return 0
 
     def connections(self):
         """ Returns list of connections from connected nodes. """
-
         if self.prev_node:
             list = self.prev_node.connections()
             list.append(self.connection)
@@ -26,7 +37,6 @@ class Node:
 
     def start_node(self):
         """ Returns city of the first node. """
-
         if self.prev_node:
             return self.prev_node.start_node()
         return self
@@ -66,9 +76,9 @@ class Optimize:
                     traject = Traject()
                     traject.set_time(self.shortest["state"].length() + self.shortest["old_trajects"][0].get_time() + self.shortest["old_trajects"][1].get_time())
 
-                    if self.shortest["state"].city != self.shortest["old_trajects"][1].get_route()[0]:
+                    if self.shortest["state"].get_city() != self.shortest["old_trajects"][1].get_route()[0]:
                         self.shortest["old_trajects"][1].reverse()
-                    if self.shortest["state"].start_node().city != self.shortest["old_trajects"][0].get_route()[-1]:
+                    if self.shortest["state"].start_node().get_city() != self.shortest["old_trajects"][0].get_route()[-1]:
                         self.shortest["old_trajects"][0].reverse()
 
                     traject.set_connections(self.shortest["old_trajects"][0].get_connections() + self.shortest["state"].connections() + self.shortest["old_trajects"][1].get_connections())
@@ -96,11 +106,11 @@ class Optimize:
             for traject in [traject for traject in self.schedule.get_trajects() if traject != self.traject]:
 
                 # Remember best merge where constraints were satisfied
-                if state.length() < self.shortest["time"] and traject.get_time() + state.length() + self.traject.get_time() < self.schedule.get_max_time() and traject.can_connect(state.city, state.connections()):
+                if state.length() < self.shortest["time"] and traject.get_time() + state.length() + self.traject.get_time() < self.schedule.get_max_time() and traject.can_connect(state.get_city(), state.connections()):
                     self.shortest = {"time": state.length(), "state": state, "old_trajects": [self.traject, traject]}
 
             # Create next layer
             if len(state.connections()) < self.depth and state.length() < self.shortest["time"]:
-                for connection in [connection for connection in state.city.connections]: #if connection not in state.connections() and connection not in self.traject.connections]:
+                for connection in [connection for connection in state.city.connections()]:
                     node = Node(state.city.new_current(connection), connection, state)
                     self.stack.append(node)

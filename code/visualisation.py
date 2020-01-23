@@ -22,11 +22,11 @@ def visualisation(schedule):
         color += color_step
 
         for connection in traject.connections:
-            lines[label].append(ax.plot([connection.city1.y, connection.city2.y], [connection.city1.x, connection.city2.x], visible=False, label=label, color=matplotlib.colors.hsv_to_rgb([color, 1, 1]), zorder=2))
+            lines[label].append(ax.plot([connection.city1.get_y(), connection.city2.get_y()], [connection.city1.get_x(), connection.city2.get_x()], visible=False, label=label, color=matplotlib.colors.hsv_to_rgb([color, 1, 1]), zorder=2))
 
-            ax.plot([connection.city1.y, connection.city2.y], [connection.city1.x, connection.city2.x], color="lightgrey", zorder=1)
-            points.append(ax.scatter(connection.city1.y, connection.city1.x, color="blue", zorder=3, label=connection.city1.name))
-            points.append(ax.scatter(connection.city2.y, connection.city2.x, color="blue", zorder=3, label=connection.city2.name))
+            ax.plot([connection.city1.get_y(), connection.city2.get_y()], [connection.city1.get_x(), connection.city2.get_x()], color="lightgrey", zorder=1)
+            points.append(ax.scatter(connection.city1.get_y(), connection.city1.get_x(), color="blue", zorder=3, label=connection.city1.get_name()))
+            points.append(ax.scatter(connection.city2.get_y(), connection.city2.get_x(), color="blue", zorder=3, label=connection.city2.get_name()))
 
     quality = schedule.quality()
     text = "K:     " + str(quality["K"]) + "\np:     " + str(quality["p"]) + "\nT:     " + str(quality["T"]) + "\nMin: " + str(quality["Min"])
