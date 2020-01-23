@@ -26,10 +26,36 @@ ooit uitgevoerd.
 (zie [/code/algorithms/README.md](/code/algorithms/README.md)).
 - **DEPTH:** Het aantal lagen waarop het Depth First algoritme wordt toegepast.
 - **EXCLUSION:** De naam van de stad die wordt weggelaten.
-- **A t/m E:** De heuristiek die wordt toegepast (zie [/code/algorithms/README.md](/code/algorithms/README.md)).
+- **A t/m E:** De heuristiek die wordt toegepast
+(zie [/code/algorithms/README.md](/code/algorithms/README.md)).
 
 Run het programma door aan te roepen:
 
 ```
 python main.py
 ```
+
+Het beste resultaat van Holland / Nederland wordt gevisualiseerd door de volgende code in main.py
+toe te voegen:
+
+```
+visualisation(load(BEST_SCHEDULE_FILE))
+```
+
+### Structuur
+
+Hieronder volgt wat in iedere map te vinden is.
+
+- **/code:** bevat alle code van dit project.
+  - **../algorithms:** bevat de code voor de algoritmes.
+  - **../classes:** bevat de code voor de benodigde classes.
+  - **../input:** bevat de code voor het inlezen van de benodigde data.
+  - **../output:** bevat code om de output te genereren en visualiseren.
+- **/data:** bevat de gegevens van connecties en stations.
+- **/presentation:** bevat de eindpresentatie.
+- **/results:** bevat de output bestanden van de resultaten.
+
+## Auteurs
+- Amber Remmelzwaal
+- Ilse de Langen
+- Stefan van den Berg
