@@ -15,6 +15,17 @@ pip install -r requirements.txt
 ```
 
 ### Gebruik
+In main.py regel 49 kan je specificaties invullen, namelijk:
+- **CONNECTIONS_FILE:** Pad naar het bestand met de verschillende connecties.
+- **COORDINATES_FILE:** Pad naar het bestand met de coordinaten van een station.
+- **BEST_SCHEDULE_FILE:** Pad naar het bestand waar de beste oplossing is opgeslagen van alle runs ooit uitgevoerd.
+- **N:** Het aantal runs.
+- **MIN_180 / MIN_120:** Het maximale aantal minuten van een traject.
+- **IMPROVE:** Het wel of niet gebruiken van het optimalisatie algoritme
+(zie [a relative link](code/algorithms/README.md)).
+- **DEPTH:** Het aantal lagen waarop het Depth First algoritme wordt toegepast.
+- **EXCLUSION:** De naam van de stad die wordt weggelaten.
+- **A t/m E:** De heuristiek die wordt toegepast
 
 Run het programma door aan te roepen:
 

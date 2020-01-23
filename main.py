@@ -16,12 +16,20 @@ from output import run, load
 from visualisation import visualisation
 from heuristic import Heuristic
 
-# Maximum time of a traject
-MIN_180 = 180
-MIN_120 = 120
+# CONNECTIONS_FILE = "data/ConnectiesNationaal.csv"
+# COORDINATES_FILE = "data/StationsNationaal.csv"
+# BEST_SCHEDULE_FILE = "results/Nederland"
+
+CONNECTIONS_FILE = "data/ConnectiesHolland.csv"
+COORDINATES_FILE = "data/StationsNationaal.csv"
+BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
 N = 1000
+
+# Maximum time of a traject
+MIN_180 = 180
+MIN_120 = 120
 
 # Improve algorithm on/off
 IMPROVE = True
@@ -46,15 +54,9 @@ D = Heuristic("overlay", Heuristic.random_city, Heuristic.overlay_connections)
 # Starting in random city, continuing to city with least connections
 E = Heuristic("lookahead", Heuristic.random_city, Heuristic.least_connections)
 
-run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", "Nederland", N, MIN_180, A, IMPROVE, DEPTH, EXCLUSION)
+run(CONNECTIONS_FILE, COORDINATES_FILE, BEST_SCHEDULE_FILE, N, MIN_120, IMPROVE, DEPTH, EXCLUSION, A)
 
-
-# visualisation(load("Nederland"))
-
-# schedule = load("Nederland")
-# print(schedule.quality())
-# for traject in schedule.trajects:
-#     print(f"{traject.get_route()}, {traject.get_time()}, {sum([connection.time for connection in traject.connections])}")
+# visualisation(load(BEST_SCHEDULE_FILE))
 
 
 # # data

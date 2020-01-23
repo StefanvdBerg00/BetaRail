@@ -13,7 +13,7 @@ from csvdata import csvdata
 from optimize import Optimize
 from visualisation import visualisation
 
-def run(connections_file, coordinates_file, file_name, N, max_time, method, improve, depth, exclusion):
+def run(connections_file, coordinates_file, best_schedule_file, N, max_time, improve, depth, exclusion, method):
     """ Runs algorithm with specified heuristic and returns best schedule. """
 
     best = {"schedule": None, "K": 0, "All": []}
@@ -41,26 +41,25 @@ def run(connections_file, coordinates_file, file_name, N, max_time, method, impr
             best["schedule"] = method.schedule
             best["K"] = quality["K"]
 
-    dump(best["schedule"], file_name)
+    dump(best["schedule"], best_schedule_file)
     best["schedule"].create_csv()
-    print(best["K"])
-    # visualisation(best["schedule"])
+    visualisation(best["schedule"])
 
-def dump(schedule, file_name):
+def dump(schedule, best_schedule_file):
     """ Checks if given schedule is better than best schedule. """
 
     try:
         best = load(file_name)
 
         if schedule.quality()["K"] > best.quality()["K"]:
-            with open(f"results/{file_name}", "wb") as file:
+            with open(best_schedule_file, "wb") as file:
                 pickle.dump(schedule, file)
     except:
-        with open(f"results/{file_name}", "wb") as file:
+        with open(best_schedule_file, "wb") as file:
             pickle.dump(schedule, file)
 
-def load(file_name):
+def load(best_schedule_file):
     """ Loads best schedule so far. """
 
-    with open(f"results/{file_name}", "rb") as file:
+    with open(best_schedule_file, "rb") as file:
         return pickle.load(file)

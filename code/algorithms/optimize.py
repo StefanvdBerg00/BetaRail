@@ -111,6 +111,6 @@ class Optimize:
 
             # Create next layer
             if len(state.connections()) < self.depth and state.length() < self.shortest["time"]:
-                for connection in [connection for connection in state.city.connections()]:
+                for connection in [connection for connection in state.city.get_all_connections()]:
                     node = Node(state.city.new_current(connection), connection, state)
                     self.stack.append(node)
