@@ -59,3 +59,7 @@ Hieronder volgt wat in iedere map te vinden is.
 - Amber Remmelzwaal
 - Ilse de Langen
 - Stefan van den Berg
+
+# Dankwoord
+- voorbeeldRepo van Maarten-vd-Sande
+- RadioRussia van Qvdpost
