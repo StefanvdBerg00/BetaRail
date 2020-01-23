@@ -22,7 +22,7 @@ In main.py regel 49 kan je specificaties invullen, namelijk:
 - **N:** Het aantal runs.
 - **MIN_180 / MIN_120:** Het maximale aantal minuten van een traject.
 - **IMPROVE:** Het wel of niet gebruiken van het optimalisatie algoritme
-(zie [a relative link](code/algorithms/README.md)).
+(zie [a /code/algorithms/README.md](/code/algorithms/README.md)).
 - **DEPTH:** Het aantal lagen waarop het Depth First algoritme wordt toegepast.
 - **EXCLUSION:** De naam van de stad die wordt weggelaten.
 - **A t/m E:** De heuristiek die wordt toegepast
