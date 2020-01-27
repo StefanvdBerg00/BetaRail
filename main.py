@@ -27,7 +27,7 @@ COORDINATES_FILE = "data/StationsNationaal.csv"
 BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
-N = 1000
+N = 1
 
 # Maximum time of a traject
 MIN_180 = 180

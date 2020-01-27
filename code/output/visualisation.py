@@ -1,9 +1,6 @@
-import matplotlib
+import matplotlib, mplcursors, csv, random
 import matplotlib.pyplot as plt
 from matplotlib.widgets import CheckButtons
-import mplcursors
-import csv
-import random
 
 def visualisation(schedule):
     trajects = schedule.get_trajects()
@@ -11,7 +8,7 @@ def visualisation(schedule):
     color_step = 1 / len(trajects) if len(trajects) != 0 else 0
 
     fig, ax = plt.subplots()
-    plt.imshow(plt.imread("map1.png"), extent=[3.315, 7.222, 50.703, 53.622])
+    plt.imshow(plt.imread("code/output/map.png"), extent=[3.315, 7.222, 50.703, 53.622])
     points = []
     lines = {}
 
