@@ -8,7 +8,8 @@
 # ***************************************************************************/
 
 import csv
-from classes import City, Connection
+from city import City
+from connection import Connection
 
 def csvdata(connections_file, coordinates_file, exclusion):
     """ Returns a dictionary with all data from csv files. """

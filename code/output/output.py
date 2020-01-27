@@ -8,7 +8,7 @@
 # ***************************************************************************/
 
 import pickle
-from classes import Schedule
+from schedule import Schedule
 from csvdata import csvdata
 from optimize import Optimize
 from visualisation import visualisation
@@ -44,13 +44,7 @@ def run(connections_file, coordinates_file, best_schedule_file, N,
 
     dump(best["schedule"], best_schedule_file)
     best["schedule"].create_csv()
-    # visualisation(best["schedule"])
-
-    K_all = [x["K"] for x in best["All"]]
-    K_max = max(K_all)
-    K_min = min(K_all)
-    K_avg = sum(K_all)/len(K_all)
-    print(K_min, K_avg, K_max)
+    visualisation(best["schedule"])
 
 def dump(schedule, best_schedule_file):
     """ Checks if given schedule is better than best schedule. """

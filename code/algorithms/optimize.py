@@ -8,7 +8,7 @@
 # ***************************************************************************/
 
 import copy
-from classes import Traject
+from traject import Traject
 
 
 class Node:

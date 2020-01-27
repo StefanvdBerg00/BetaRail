@@ -27,7 +27,7 @@ BEST_SCHEDULE_FILE = "results/Nederland"
 # BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
-N = 10
+N = 100
 
 # Maximum time of a traject
 MIN_180 = 180
@@ -56,10 +56,6 @@ D = Heuristic("overlay", Heuristic.random_city, Heuristic.overlay_connections)
 # Starting in random city, continuing to city with least connections
 E = Heuristic("lookahead", Heuristic.random_city, Heuristic.least_connections)
 
-# run(CONNECTIONS_FILE, COORDINATES_FILE, BEST_SCHEDULE_FILE, N, MIN_120, IMPROVE, DEPTH, EXCLUSION, A)
+run(CONNECTIONS_FILE, COORDINATES_FILE, BEST_SCHEDULE_FILE, N, MIN_180, IMPROVE, DEPTH, EXCLUSION, C)
 
 # visualisation(load(BEST_SCHEDULE_FILE))
-
-for n in range(0, 5):
-    print(n)
-    run(CONNECTIONS_FILE, COORDINATES_FILE, BEST_SCHEDULE_FILE, 1*10**n, MIN_180, IMPROVE, DEPTH, EXCLUSION, D)

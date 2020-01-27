@@ -8,7 +8,7 @@
 # ***************************************************************************/
 
 import sys, random
-from classes import Traject
+from traject import Traject
 
 
 class Heuristic:
