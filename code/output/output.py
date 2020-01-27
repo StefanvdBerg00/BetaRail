@@ -44,7 +44,13 @@ def run(connections_file, coordinates_file, best_schedule_file, N,
 
     dump(best["schedule"], best_schedule_file)
     best["schedule"].create_csv()
-    visualisation(best["schedule"])
+    # visualisation(best["schedule"])
+
+    K_all = [x["K"] for x in best["All"]]
+    K_max = max(K_all)
+    K_min = min(K_all)
+    K_avg = sum(K_all)/len(K_all)
+    print(K_min, K_avg, K_max)
 
 def dump(schedule, best_schedule_file):
     """ Checks if given schedule is better than best schedule. """
