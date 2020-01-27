@@ -1,6 +1,5 @@
 trein,lijnvoering
-trein_1,"[Haarlem, Amsterdam Sloterdijk, Amsterdam Centraal, Amsterdam Amstel, Amsterdam Zuid, Amsterdam Sloterdijk, Zaandam, Hoorn, Alkmaar, Castricum]"
-trein_2,"[Gouda, Den Haag Centraal, Delft, Schiedam Centrum, Rotterdam Centraal, Rotterdam Alexander, Gouda, Alphen a/d Rijn, Leiden Centraal, Den Haag Centraal]"
-trein_3,"[Dordrecht, Rotterdam Centraal]"
-trein_4,"[Beverwijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Schiphol Airport, Amsterdam Zuid]"
-trein_5,"[Zaandam, Beverwijk, Castricum, Zaandam, Castricum, Alkmaar, Den Helder]"
+trein_1,"[<classes.City object at 0x000001ADDAE58848>, <classes.City object at 0x000001ADDAE07E48>, <classes.City object at 0x000001ADDAE58C88>, <classes.City object at 0x000001ADDAE58708>, <classes.City object at 0x000001ADDAE25B08>, <classes.City object at 0x000001ADDAE58988>, <classes.City object at 0x000001ADDAE58A88>, <classes.City object at 0x000001ADDAE1BEC8>, <classes.City object at 0x000001ADDAE58C88>, <classes.City object at 0x000001ADDAE58C08>]"
+trein_2,"[<classes.City object at 0x000001ADDADDDF88>, <classes.City object at 0x000001ADDAE25E48>, <classes.City object at 0x000001ADDAE25AC8>, <classes.City object at 0x000001ADDAE58A48>, <classes.City object at 0x000001ADDAE58988>, <classes.City object at 0x000001ADDAE25CC8>, <classes.City object at 0x000001ADDAE25D88>, <classes.City object at 0x000001ADDAE25B08>]"
+trein_3,"[<classes.City object at 0x000001ADDAE1BB48>, <classes.City object at 0x000001ADDAE58088>, <classes.City object at 0x000001ADDAE58C08>, <classes.City object at 0x000001ADDAE58848>, <classes.City object at 0x000001ADDAE1BBC8>, <classes.City object at 0x000001ADDAE07FC8>, <classes.City object at 0x000001ADDAE1BB48>, <classes.City object at 0x000001ADDAE07FC8>, <classes.City object at 0x000001ADDAE58E08>]"
+trein_4,"[<classes.City object at 0x000001ADDAE58A88>, <classes.City object at 0x000001ADDAE58D88>, <classes.City object at 0x000001ADDAE58A48>, <classes.City object at 0x000001ADDAE58B88>, <classes.City object at 0x000001ADDAE25E48>, <classes.City object at 0x000001ADDAE58B88>, <classes.City object at 0x000001ADDAE58D88>]"

@@ -27,7 +27,7 @@ COORDINATES_FILE = "data/StationsNationaal.csv"
 BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
-N = 1
+N = 100
 
 # Maximum time of a traject
 MIN_180 = 180
@@ -59,19 +59,3 @@ E = Heuristic("lookahead", Heuristic.random_city, Heuristic.least_connections)
 run(CONNECTIONS_FILE, COORDINATES_FILE, BEST_SCHEDULE_FILE, N, MIN_120, IMPROVE, DEPTH, EXCLUSION, A)
 
 # visualisation(load(BEST_SCHEDULE_FILE))
-
-
-# # data
-# import csv
-# for method in [B]:
-#     for n in range(3, 4):
-#         print(n)
-#         solution = run("data/ConnectiesNationaal.csv", "data/StationsNationaal.csv", 1*10**n, MIN_180, method, IMPROVE, DEPTH, FILTER)
-#         K_all = [x["K"] for x in solution["All"]]
-#         K_max = max(K_all)
-#         K_min = min(K_all)
-#         K_avg = sum(K_all)/len(K_all)
-#
-#         with open('results/data7.csv', mode="a", newline="") as file:
-#             writer = csv.writer(file, delimiter=",")
-#             writer.writerow([method.name, solution["schedule"].quality(), len(K_all), True, K_min, K_avg, K_max])

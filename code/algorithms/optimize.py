@@ -69,28 +69,37 @@ class Optimize:
                 self.DepthFirst(route[0])
                 self.DepthFirst(route[-1])
 
-            if self.shortest["state"]:
+            state = self.shortest["state"]
+
+            if state:
+                traject_0 = self.shortest["old_trajects"][0]
+                traject_1 = self.shortest["old_trajects"][1]
 
                 # Decide to merge two trajects or delete one
-                if (self.shortest["state"].length() + self.shortest["old_trajects"][0].get_time()) < ((len(self.shortest["old_trajects"][0].get_connections()) / self.schedule.number_connections) * 10000):
+                if (state.length() + traject_0.get_time()) \
+                < ((len(traject_0.get_connections()) / self.schedule.number_connections) * 10000):
                     traject = Traject()
-                    traject.set_time(self.shortest["state"].length() + self.shortest["old_trajects"][0].get_time() + self.shortest["old_trajects"][1].get_time())
+                    traject.set_time(state.length() + traject_0.get_time() + traject_1.get_time())
 
-                    if self.shortest["state"].get_city() != self.shortest["old_trajects"][1].get_route()[0]:
-                        self.shortest["old_trajects"][1].reverse()
-                    if self.shortest["state"].start_node().get_city() != self.shortest["old_trajects"][0].get_route()[-1]:
-                        self.shortest["old_trajects"][0].reverse()
+                    if state.get_city() != traject_1.get_route()[0]:
+                        traject_1.reverse()
 
-                    traject.set_connections(self.shortest["old_trajects"][0].get_connections() + self.shortest["state"].connections() + self.shortest["old_trajects"][1].get_connections())
-                    self.schedule.trajects.remove(self.shortest["old_trajects"][0])
-                    self.schedule.trajects.remove(self.shortest["old_trajects"][1])
+                    if state.start_node().get_city() != traject_0.get_route()[-1]:
+                        traject_0.reverse()
+
+                    traject.set_connections(traject_0.get_connections() + state.connections() \
+                                          + traject_1.get_connections())
+
+                    self.schedule.trajects.remove(traject_0)
+                    self.schedule.trajects.remove(traject_1)
                     self.schedule.add_traject(traject)
                 else:
-                    self.shortest["old_trajects"][0].remove_traject(self.schedule)
+                    traject_0.remove_traject(self.schedule)
 
         # Delete traject if score improves
         for traject in self.schedule.get_trajects():
-            if 100 + traject.get_time() > ((len(traject.get_connections()) / self.schedule.number_connections) * 10000):
+            if 100 + traject.get_time() \
+            > ((len(traject.get_connections()) / self.schedule.number_connections) * 10000):
                 traject.remove_traject(self.schedule)
 
     def DepthFirst(self, city):
@@ -106,8 +115,12 @@ class Optimize:
             for traject in [traject for traject in self.schedule.get_trajects() if traject != self.traject]:
 
                 # Remember best merge where constraints were satisfied
-                if state.length() < self.shortest["time"] and traject.get_time() + state.length() + self.traject.get_time() < self.schedule.get_max_time() and traject.can_connect(state.get_city(), state.connections()):
-                    self.shortest = {"time": state.length(), "state": state, "old_trajects": [self.traject, traject]}
+                if state.length() < self.shortest["time"] and traject.get_time() + state.length() \
+                + self.traject.get_time() < self.schedule.get_max_time() \
+                and traject.can_connect(state.get_city(), state.connections()):
+                    self.shortest = {"time": state.length(),
+                                     "state": state,
+                                     "old_trajects": [self.traject, traject]}
 
             # Create next layer
             if len(state.connections()) < self.depth and state.length() < self.shortest["time"]:

@@ -112,7 +112,8 @@ class Heuristic:
                     connection = random.choice(connections)
 
                     # Add connection to traject if constraints are satisfied
-                    if (traject.get_time() + connection.get_time() < self.schedule.get_max_time()) and connection not in traject.get_connections():
+                    if (traject.get_time() + connection.get_time() < self.schedule.get_max_time()) \
+                    and connection not in traject.get_connections():
                         traject.add(connection)
                         self.current_city = self.current_city.new_current(connection)
                         traject.set_next_city(True)

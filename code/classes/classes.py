@@ -46,13 +46,6 @@ class City:
         if connection.get_city1() == self:
             return connection.get_city2()
         return connection.get_city1()
-    #
-    # def remove_connection(self, connection):
-    #     """ Removes a connection from city. """
-    #     self.connections.remove(connection)
-
-    def __repr__(self):
-        return f"{self.name}"
 
 
 class Connection:
@@ -77,9 +70,6 @@ class Connection:
     def get_visited(self):
         """ Returns visited of connection. """
         return self.visited
-
-    def __repr__(self):
-        return f"From {self.city1} to {self.city2} ({self.time} min)"
 
 
 class Traject:
@@ -130,16 +120,12 @@ class Traject:
 
     def remove_traject(self, schedule):
         """ Removes traject from schedule. """
-        # for connection in self.connections:
-        #     connection.city1.remove_connection(connection)
-        #     connection.city2.remove_connection(connection)
-        #     schedule.remove_connection(connection)
         schedule.trajects.remove(self)
 
     def can_connect(self, city, connections):
         """ Checks if given city is at the edge of traject. """
         route = self.get_route()
-        if (city == route[0] or city == route[-1]): #and not any(connection in connections for connection in self.connections):
+        if (city == route[0] or city == route[-1]): 
             return True
         return False
 
@@ -148,16 +134,18 @@ class Traject:
         if len(self.connections) == 1:
             return [self.connections[0].get_city1(), self.connections[0].get_city2()]
 
-        city = self.connections[0].get_city1() if self.connections[0].get_city1() != self.connections[1].get_city1() and self.connections[0].get_city1() != self.connections[1].get_city2() else self.connections[0].get_city2()
+        if self.connections[0].get_city1() != self.connections[1].get_city1() \
+        and self.connections[0].get_city1() != self.connections[1].get_city2():
+            city = self.connections[0].get_city1()
+        else:
+            city = self.connections[0].get_city2()
+
         route = [city]
 
         for connection in self.connections:
             city = city.new_current(connection)
             route.append(city)
         return route
-
-    def __repr__(self):
-        return f"{self.connections}\n"
 
 
 class Schedule:
@@ -184,19 +172,15 @@ class Schedule:
         """ Adds a traject to schedule. """
         self.trajects.append(traject)
 
-    # def remove_connection(self, connection):
-    #     """ Removes a connection from all the connection. """
-    #     if sum([1 for traject in self.trajects if connection in traject.get_connections()]) == 1:
-    #         self.all_connections.remove(connection)
-
     def quality(self):
         """ Returns the quality of schedule. """
         T = len(self.trajects)
         Min = sum([traject.get_time() for traject in self.trajects])
         connections = []
-        [connections.extend(connection) for connection in [traject.get_connections() for traject in self.trajects]]
+        [connections.extend(connection) for connection in [traject.get_connections() \
+        for traject in self.trajects]]
         p = len(set(connections)) / self.number_connections
-        # p = len([connection for connection in self.all_connections if connection.get_visited()]) / self.number_connections
+
         return {"p": p, "T": T, "Min": Min, "K": p*10000 - (T*100 + Min)}
 
     def create_csv(self):
@@ -207,6 +191,3 @@ class Schedule:
 
             for i, traject in enumerate(self.trajects):
                 solution_writer.writerow([f"trein_{i + 1}", traject.get_route()])
-
-    def __repr__(self):
-        return "".join([f"{traject.get_route()}\n" for traject in self.trajects])

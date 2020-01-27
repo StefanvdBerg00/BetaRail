@@ -13,7 +13,8 @@ from csvdata import csvdata
 from optimize import Optimize
 from visualisation import visualisation
 
-def run(connections_file, coordinates_file, best_schedule_file, N, max_time, improve, depth, exclusion, method):
+def run(connections_file, coordinates_file, best_schedule_file, N,
+        max_time, improve, depth, exclusion, method):
     """ Runs algorithm with specified heuristic and returns best schedule. """
 
     best = {"schedule": None, "K": 0, "All": []}
