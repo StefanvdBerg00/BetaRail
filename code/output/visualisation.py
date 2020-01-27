@@ -25,6 +25,30 @@ def visualisation(schedule):
     points = []
     lines = {}
 
+    connections = []
+    [connections.extend(connection) for connection in \
+    [traject.get_connections() for traject in schedule.get_trajects()]]
+
+    for connection in schedule.get_all_connections():
+        
+        # Plot every connection in lightgrey
+        ax.plot([connection.city1.get_y(), connection.city2.get_y()],
+                [connection.city1.get_x(), connection.city2.get_x()],
+                color="lightgrey", zorder=1)
+
+        # Remember every city
+        points.append(ax.scatter(connection.city1.get_y(), connection.city1.get_x(),
+                                 color="blue", zorder=3, label=connection.city1.get_name()))
+
+        points.append(ax.scatter(connection.city2.get_y(), connection.city2.get_x(),
+                                 color="blue", zorder=3, label=connection.city2.get_name()))
+
+        # Plot red dashed line when connection is removed from schedule
+        if connection not in connections:
+            ax.plot([connection.city1.get_y(), connection.city2.get_y()],
+                    [connection.city1.get_x(), connection.city2.get_x()],
+                    "r--", zorder=1)
+
     for i, traject in enumerate(trajects):
         route = traject.get_route()
         label = f"{route[0].get_name()} -> {route[-1].get_name()} ({traject.get_time()})"
@@ -38,18 +62,6 @@ def visualisation(schedule):
                                         [connection.city1.get_x(), connection.city2.get_x()],
                                         visible=False, label=label,
                                         color=matplotlib.colors.hsv_to_rgb([color, 1, 1]), zorder=2))
-
-            # Plot every connection in lightgrey
-            ax.plot([connection.city1.get_y(), connection.city2.get_y()],
-                    [connection.city1.get_x(), connection.city2.get_x()],
-                    color="lightgrey", zorder=1)
-
-            # Remember every city
-            points.append(ax.scatter(connection.city1.get_y(), connection.city1.get_x(),
-                                     color="blue", zorder=3, label=connection.city1.get_name()))
-
-            points.append(ax.scatter(connection.city2.get_y(), connection.city2.get_x(),
-                                     color="blue", zorder=3, label=connection.city2.get_name()))
 
     # For showing the score
     quality = schedule.quality()

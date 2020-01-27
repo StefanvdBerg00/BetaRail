@@ -18,16 +18,16 @@ from output import run, load
 from visualisation import visualisation
 from heuristic import Heuristic
 
-# CONNECTIONS_FILE = "data/ConnectiesNationaal.csv"
-# COORDINATES_FILE = "data/StationsNationaal.csv"
-# BEST_SCHEDULE_FILE = "results/Nederland"
-
-CONNECTIONS_FILE = "data/ConnectiesHolland.csv"
+CONNECTIONS_FILE = "data/ConnectiesNationaal.csv"
 COORDINATES_FILE = "data/StationsNationaal.csv"
-BEST_SCHEDULE_FILE = "results/Holland"
+BEST_SCHEDULE_FILE = "results/Nederland"
+
+# CONNECTIONS_FILE = "data/ConnectiesHolland.csv"
+# COORDINATES_FILE = "data/StationsNationaal.csv"
+# BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
-N = 100
+N = 1
 
 # Maximum time of a traject
 MIN_180 = 180

@@ -71,6 +71,8 @@ class Connection:
         """ Returns visited of connection. """
         return self.visited
 
+    def __repr__(self):
+        return f"{self.city2.name}-{self.city1.name}"
 
 class Traject:
     def __init__(self):
@@ -125,7 +127,7 @@ class Traject:
     def can_connect(self, city, connections):
         """ Checks if given city is at the edge of traject. """
         route = self.get_route()
-        if (city == route[0] or city == route[-1]): 
+        if (city == route[0] or city == route[-1]):
             return True
         return False
 
@@ -159,6 +161,10 @@ class Schedule:
     def get_trajects(self):
         """ Returns all trajects in schedule. """
         return self.trajects
+
+    def get_all_connections(self):
+        """ Returns all possible connections in schedule. """
+        return self.all_connections
 
     def get_cities(self):
         """ Returns all cities in schedule. """
