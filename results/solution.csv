@@ -1,6 +1,6 @@
 trein,lijnvoering
-trein_1,"[Rotterdam Centraal, Schiedam Centrum, Delft, Den Haag Centraal, Gouda, Rotterdam Alexander, Rotterdam Centraal, Dordrecht]"
-trein_2,"[Den Haag Centraal, Leiden Centraal, Alphen a/d Rijn, Gouda]"
-trein_3,"[Amsterdam Centraal, Amsterdam Amstel, Amsterdam Zuid, Schiphol Airport, Leiden Centraal, Heemstede-Aerdenhout, Haarlem, Amsterdam Sloterdijk, Amsterdam Centraal]"
-trein_4,"[Den Helder, Alkmaar, Hoorn, Zaandam, Beverwijk]"
-trein_5,"[Amsterdam Zuid, Amsterdam Sloterdijk, Zaandam, Castricum, Alkmaar, Castricum, Beverwijk, Haarlem]"
+trein_1,"[Haarlem, Amsterdam Sloterdijk, Amsterdam Centraal, Amsterdam Amstel, Amsterdam Zuid, Amsterdam Sloterdijk, Zaandam, Hoorn, Alkmaar, Castricum]"
+trein_2,"[Gouda, Den Haag Centraal, Delft, Schiedam Centrum, Rotterdam Centraal, Rotterdam Alexander, Gouda, Alphen a/d Rijn, Leiden Centraal, Den Haag Centraal]"
+trein_3,"[Dordrecht, Rotterdam Centraal]"
+trein_4,"[Beverwijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Schiphol Airport, Amsterdam Zuid]"
+trein_5,"[Zaandam, Beverwijk, Castricum, Zaandam, Castricum, Alkmaar, Den Helder]"

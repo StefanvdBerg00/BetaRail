@@ -200,7 +200,7 @@ class Schedule:
         return {"p": p, "T": T, "Min": Min, "K": p*10000 - (T*100 + Min)}
 
     def create_csv(self):
-        """ Creates a csv-file for schedule. """    
+        """ Creates a csv-file for schedule. """
         with open('results/solution.csv', mode="w", newline="") as solution_file:
             solution_writer = csv.writer(solution_file, delimiter=",")
             solution_writer.writerow(["trein", "lijnvoering"])

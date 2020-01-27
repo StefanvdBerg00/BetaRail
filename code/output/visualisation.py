@@ -8,7 +8,7 @@ def visualisation(schedule):
     color_step = 1 / len(trajects) if len(trajects) != 0 else 0
 
     fig, ax = plt.subplots()
-    plt.imshow(plt.imread("code/output/map.png"), extent=[3.315, 7.222, 50.703, 53.622])
+    plt.imshow(plt.imread("images/map.png"), extent=[3.315, 7.222, 50.703, 53.622])
     points = []
     lines = {}
 
