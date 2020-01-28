@@ -30,9 +30,11 @@ main.py op TRUE staat. Het algoritme werkt als volgt:
 Eerst wordt vanuit een bepaalde stad gekeken naar alle mogelijkheden om
 trajecten aan elkaar te verbinden. Elke mogelijkheid wordt gerepresenteerd
 door een Node. In run wordt via het Depth First algoritme voor elke Node berekend
-of deze de doelfunctie zal verhogen. Als dit het geval is, worden de trajecten
-samengevoegd. Daarna wordt gekeken of het eventueel weglaten van een traject
-de doelfunctie verhoogd.
+of deze de doelfunctie zal verhogen. Nadat alle trajecten zijn langsgelopen wordt 
+er gekeken naar de beste verbetering. Bij deze verbetering wordt een keuze gemaakt 
+tussen het samenvoegen van de trajecten of het verwijderen van het traject waaruit 
+depth first werd uitgevoerd. Als laatst, als er geen verbeteringen meer mogelijk 
+zijn, wordt er gekeken of het eventueel weglaten van een traject de doelfunctie verhoogd.
 
 ## Datastructuur
 ![Datastructuur](https://github.com/StefanvdBerg00/BetaRail/blob/master/images/datastructureAlgorithms.PNG) *Datastructuur van de algoritmes*
