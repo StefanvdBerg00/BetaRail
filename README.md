@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```
 
 ### Gebruik
-In main.py regel 49 kan je specificaties invullen, namelijk:
+In main.py regel 59 kan je specificaties invullen, namelijk:
 - **CONNECTIONS_FILE:** Pad naar het bestand met de verschillende connecties.
 - **COORDINATES_FILE:** Pad naar het bestand met de coordinaten van een station.
 - **BEST_SCHEDULE_FILE:** Pad naar het bestand waar de beste oplossing is opgeslagen van alle runs
