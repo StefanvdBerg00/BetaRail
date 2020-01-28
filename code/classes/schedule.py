@@ -56,4 +56,5 @@ class Schedule:
             solution_writer.writerow(["trein", "lijnvoering"])
 
             for i, traject in enumerate(self.trajects):
-                solution_writer.writerow([f"trein_{i + 1}", traject.get_route()])
+                solution_writer.writerow([f"trein_{i + 1}",
+                                         [city.get_name() for city in traject.get_route()]])

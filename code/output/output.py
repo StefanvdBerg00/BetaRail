@@ -50,7 +50,7 @@ def dump(schedule, best_schedule_file):
     """ Checks if given schedule is better than best schedule. """
 
     try:
-        best = load(file_name)
+        best = load(best_schedule_file)
 
         if schedule.quality()["K"] > best.quality()["K"]:
             with open(best_schedule_file, "wb") as file:
