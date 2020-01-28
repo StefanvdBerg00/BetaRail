@@ -5,7 +5,7 @@
 # Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
 #
 # Programmeertheorie
-# ***************************************************************************/
+# ****************************************************************************
 
 import pickle
 from schedule import Schedule

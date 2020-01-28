@@ -5,7 +5,7 @@
 # Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
 #
 # Programmeertheorie
-# ***************************************************************************/
+# ****************************************************************************
 
 import copy
 from traject import Traject
@@ -112,7 +112,8 @@ class Optimize:
             state = self.stack.pop()
 
             # Iterate over every traject except itself
-            for traject in [traject for traject in self.schedule.get_trajects() if traject != self.traject]:
+            for traject in [traject for traject in \
+            self.schedule.get_trajects() if traject != self.traject]:
 
                 # Remember best merge where constraints were satisfied
                 if state.length() < self.shortest["time"] and traject.get_time() + state.length() \

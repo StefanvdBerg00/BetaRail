@@ -5,7 +5,7 @@
 # Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
 #
 # Programmeertheorie
-# ***************************************************************************/
+# ****************************************************************************
 
 import csv
 from city import City

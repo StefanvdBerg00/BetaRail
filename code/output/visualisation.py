@@ -5,7 +5,7 @@
 # Amber Remmelzwaal, Ilse de Langen & Stefan van den Berg
 #
 # Programmeertheorie
-# ***************************************************************************/
+# ****************************************************************************
 
 import matplotlib, mplcursors, csv, random
 import matplotlib.pyplot as plt
@@ -30,7 +30,7 @@ def visualisation(schedule):
     [traject.get_connections() for traject in schedule.get_trajects()]]
 
     for connection in schedule.get_all_connections():
-        
+
         # Plot every connection in lightgrey
         ax.plot([connection.city1.get_y(), connection.city2.get_y()],
                 [connection.city1.get_x(), connection.city2.get_x()],
