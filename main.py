@@ -27,7 +27,7 @@ BEST_SCHEDULE_FILE = "results/Nederland"
 # BEST_SCHEDULE_FILE = "results/Holland"
 
 # Amount of iterations
-N = 100
+N = 10
 
 # Maximum time of a traject
 MIN_180 = 180

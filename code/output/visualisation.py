@@ -80,6 +80,8 @@ def visualisation(schedule):
     check.on_clicked(func)
 
     ax.text(3.5, 52.95, text, bbox=dict(facecolor='#ffff7f', edgecolor='black'))
+    ax.set_axis_off()
+    plt.axis("off")
     plt.xlim(3.355, 7.222)
     plt.ylim(50.703, 53.522)
 
